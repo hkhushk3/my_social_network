@@ -34,7 +34,7 @@ class UserPosts(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['post_user'] = self.post_user
+        context['post_user'] = self.request.user
         return context
 
 class PostDetail(SelectRelatedMixin, generic.DetailView):
@@ -47,7 +47,7 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
 
 class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
     model = models.Post
-    fields = ('message', 'group')
+    fields = ('message', 'image', 'group')
 
     def form_valid(self,form):
         self.object = form.save(commit=False)
@@ -67,7 +67,3 @@ class DeletePost(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView):
     def delete(self, *args, **kwargs):
         messages.success(self.request,'Post Deleted')
         return super().delete(*args,**kwargs)
-
-
-
-# Create your views here.

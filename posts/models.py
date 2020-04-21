@@ -15,6 +15,7 @@ class Post(models.Model):
     #created_at = models.DateTimeField(auto_now=True)
     message = models.TextField()
     #message_html = models.TextField(editable=False)
+    image = models.ImageField(upload_to = 'images/', null=True, blank=True)
     group = models.ForeignKey(Group,related_name='posts',null=True,blank=True,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -30,6 +31,3 @@ class Post(models.Model):
     class Meta:
         #ordering = ['-created_at']
         unique_together = ['user', 'message']
-
-class Test(models.Model):
-    message = models.TextField()
